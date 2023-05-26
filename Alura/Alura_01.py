@@ -12,7 +12,7 @@ print('**********************************')
 
 #numero_secreto = int(round(random.random() * 100))
 numero_secreto = int(random.randrange(1, 101))
-total_tentativas = 3
+total_tentativas = 0
 rodada = 1
 pontos = 1000
 
@@ -46,16 +46,22 @@ for rodada in range(1, total_tentativas + 1):
     menor = chute < numero_secreto
 
     if (acertou):
-        print(f'Você acertou e fez {pontos} pontos!')
+        print(f'Você acertou e fez {pontos:.0f} pontos!')
         break
     else:
+        pontos_perdidos = abs(numero_secreto - chute) / 3  # colocando numero absoluto pois se o chute for maior, também irá tirar pontos pois ignorará o sinal de numero negativo
+        pontos = pontos - pontos_perdidos
+
         if(maior):
             print('Você errou. Seu chute foi maior que o numero secreto ')
+            if (rodada == total_tentativas):
+                print(f'O numero secreto era {numero_secreto} e você fez {pontos:.0f} pontos')
         elif (menor):
             print('Você errou. Seu chute foi menor que o número secreto ')
+            if (rodada == total_tentativas):
+                print(f'O numero secreto era {numero_secreto} e você fez {pontos:.0f} pontos')
 
-    pontos_perdidos = abs(numero_secreto - chute)  #colocando numero absoluto pois se o chute for maior, também irá tirar pontos
-    pontos = pontos - pontos_perdidos
+
     # rodada = rodada + 1  -- Usado no while
 
 print('Fim de jogo')
